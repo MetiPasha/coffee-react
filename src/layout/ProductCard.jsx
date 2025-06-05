@@ -1,22 +1,28 @@
 import React from "react";
 import Button from "../layout/Button";
-import { BsStarHalf } from "react-icons/bs";
+import { BsStar, BsStarHalf } from "react-icons/bs";
 import { BsStarFill } from "react-icons/bs";
 
 const ProductCard = (props) => {
+  const fullStar = Math.floor(props.rating);
+  const halfStar = props.rating % 1 >= 0.5;
+  const emptyStar = 5 - fullStar - (halfStar ? 1 : 0);
+
   return (
     <div className=" w-full lg:w-1/4 bg-white p-3 rounded-lg">
       <img className=" rounded-lg" src={props.img} alt="img" />
       <div className=" flex flex-col items-center mt-5 gap-3">
         <h2 className=" font-semibold text-xl">{props.title}</h2>
         <div className=" flex">
-          <BsStarFill className=" text-brightColor" />
-          <BsStarFill className=" text-brightColor" />
-          <BsStarFill className=" text-brightColor" />
-          <BsStarFill className=" text-brightColor" />
-          <BsStarHalf className=" text-brightColor" />
+          {[...Array(fullStar)].map((_, i) => (
+            <BsStarFill key={"full" + i} className=" text-brand" />
+          ))}
+          {halfStar && <BsStarHalf className=" text-brand" />}
+          {[...Array(emptyStar)].map((_, i) => (
+            <BsStar key={"empty" + i} className=" text-brand" />
+          ))}
         </div>
-        <h3 className=" font-semibold text-lg">$15.99</h3>
+        <h3 className=" font-semibold text-lg">{props.price}</h3>
         <Button title="Add To Card" />
       </div>
     </div>
