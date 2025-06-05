@@ -24,11 +24,7 @@ const ReviewCard = (props) => {
           <FaQuoteRight className=" text-backgroundColor" size={42} />
         </span>
       </div>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet
-        consequatur fuga suscipit perspiciatis totam. Eos esse nisi omnis dicta,
-        aperiam distinctio fuga ipsam rerum rem.
-      </p>
+      <p>{props.review}</p>
     </div>
   );
 };

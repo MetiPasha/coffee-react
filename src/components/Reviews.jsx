@@ -12,9 +12,21 @@ const Reviews = () => {
       </h1>
 
       <div className=" flex flex-col lg:flex-row gap-5 justify-center py-4 my-8">
-        <ReviewCard img={img1} title="Olivia Ava" />
-        <ReviewCard img={img2} title="John Deo" />
-        <ReviewCard img={img3} title="Sofia Zoe" />
+        <ReviewCard
+          img={img1}
+          title="Olivia Ava"
+          review="Loved the flat white — perfectly balanced. Staff were super friendly, and the music wasn’t too loud. Will return for sure."
+        />
+        <ReviewCard
+          img={img2}
+          title="John Deo"
+          review="Atmosphere is warm and inviting. Tried their signature cold brew — bold flavor, not too bitter. A hidden gem downtown."
+        />
+        <ReviewCard
+          img={img3}
+          title="Sofia Zoe"
+          review="The espresso was smooth with rich crema, and the vibe inside felt cozy and calm. Great spot to relax or read."
+        />
       </div>
     </div>
   );
