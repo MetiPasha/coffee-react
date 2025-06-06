@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
-import img1 from "../assets/img/product1.jpg";
-import img2 from "../assets/img/product2.jpg";
-import img3 from "../assets/img/product3.jpg";
 import ProductCard from "../layout/ProductCard";
+import api from "../utils/axios";
 
 const Products = () => {
-  const [product, setProduct] = useState([]);
+  const [products, setProducts] = useState([]);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    api
+      .get("/products")
+      .then((res) => setProducts(res.data))
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <div className=" min-h-screen flex flex-col justify-center lg:px-32 px-5 bg-brand">
@@ -16,9 +19,14 @@ const Products = () => {
       </h1>
 
       <div className=" flex flex-col lg:flex-row gap-12 justify-center">
-        <ProductCard img={img1} title="Nespresso" rating={2} />
-        <ProductCard img={img2} title="AeroPress" rating={3} />
-        <ProductCard img={img3} title="Chemex" rating={4.5} />
+        {products.map((item) => (
+          <ProductCard
+            key={item.id}
+            title={item.name}
+            image={item.image}
+            rating={item.rating}
+          />
+        ))}
       </div>
     </div>
   );
