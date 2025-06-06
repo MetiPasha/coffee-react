@@ -1,5 +1,5 @@
 import React from "react";
-import MenuCard from "../layout/MenuCard";
+import MenuCard from "../layouts/MenuCard";
 import img1 from "../assets/img/menu1.jpg";
 import img2 from "../assets/img/menu2.jpg";
 import img3 from "../assets/img/menu3.jpg";

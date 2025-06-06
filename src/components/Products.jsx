@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ProductCard from "../layout/ProductCard";
+import ProductCard from "../layouts/ProductCard";
 import api from "../utils/axios";
 
 const Products = () => {
@@ -24,6 +24,7 @@ const Products = () => {
             key={item.id}
             title={item.name}
             image={item.image}
+            price={item.price}
             rating={item.rating}
           />
         ))}

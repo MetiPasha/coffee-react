@@ -71,7 +71,7 @@ const Footer = () => {
               className=" hover:text-backgroundColor transition-all cursor-pointer"
               href="/"
             >
-              CafePulse@email.com
+              CoffeePulse@email.com
             </a>
             <a
               className=" hover:text-backgroundColor transition-all cursor-pointer"

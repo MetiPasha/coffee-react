@@ -1,6 +1,6 @@
 import React from "react";
 import img from "../assets/img/home.png";
-import Button from "../layout/Button";
+import Button from "../layouts/Button";
 
 const Home = () => {
   return (

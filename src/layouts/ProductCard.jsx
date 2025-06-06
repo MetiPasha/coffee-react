@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "../layout/Button";
+import Button from "./Button";
 import { BsStar } from "react-icons/bs";
 import { BsStarFill } from "react-icons/bs";
 import { BiSolidStarHalf } from "react-icons/bi";
@@ -27,7 +27,7 @@ const ProductCard = (props) => {
             <BsStar key={"empty" + i} className=" text-brand" />
           ))}
         </div>
-        <h3 className=" font-semibold text-lg">{props.price}</h3>
+        <h3 className=" font-semibold text-lg">{props.price}$</h3>
         <Button title="Add To Card" />
       </div>
     </div>

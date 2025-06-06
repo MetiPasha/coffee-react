@@ -1,6 +1,6 @@
 import React from "react";
 import img from "../assets/img/about.jpg";
-import Button from "../layout/Button";
+import Button from "../layouts/Button";
 
 const About = () => {
   return (
