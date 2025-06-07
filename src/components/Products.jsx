@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import ProductCard from "../layouts/ProductCard";
 import api from "../utils/axios";
+import useStore from "../store/store";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
+  const addToCart = useStore((state) => state.addToCart);
 
   useEffect(() => {
     api
@@ -26,6 +28,7 @@ const Products = () => {
             image={item.image}
             price={item.price}
             rating={item.rating}
+            onAddToCart={() => addToCart(item)}
           />
         ))}
       </div>

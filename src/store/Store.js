@@ -4,6 +4,7 @@ const useStore = create((set) => ({
   cart: [],
   addToCart: (product) =>
     set((state) => {
+      console.log("added to cart", product);
       const exists = state.cart.find((item) => item.id === product.id);
       if (exists) {
         return {
