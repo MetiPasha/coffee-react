@@ -5,6 +5,7 @@
 :root {
   --bright-color: #ab6b2e;
   --background-color: #fde9cc;
+  --background-cart: #cc9743;
 }
 
 body {
@@ -16,6 +17,9 @@ body {
 }
 .bg-brand {
   background-color: var(--background-color);
+}
+.cart-brand {
+  background-color: var(--background-cart);
 }
 .hover-brand:hover {
   color: var(--bright-color);

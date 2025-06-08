@@ -3,6 +3,7 @@ import { SiCoffeescript } from "react-icons/si";
 import { Link } from "react-scroll";
 import Button from "../layouts/Button";
 import { AiOutlineClose, AiOutlineMenuFold } from "react-icons/ai";
+import { Link as Links } from "react-router-dom";
 
 const Navbar = () => {
   const [menu, setMenu] = useState(false);
@@ -77,9 +78,13 @@ const Navbar = () => {
               <span className="absolute inset-x-0 bottom-0 h-0.5 bg-black transform scale-x-0 origin-left transition-transform group-hover:scale-x-100"></span>
             </Link>
           </nav>
-          <div className="hidden lg:flex">
+          <div className="hidden lg:flex items-center gap-6">
+            <Links to="/cart" className="text-black hover:text-brand text-xl">
+              🛒 Cart
+            </Links>
             <Button title="Login" />
           </div>
+
           <div className="md:hidden flex items-center">
             {menu ? (
               <AiOutlineClose size={25} onClick={handleChange} />
@@ -148,7 +153,6 @@ const Navbar = () => {
             Reviews
             <span className="absolute inset-x-0 bottom-0 h-0.5 bg-black transform scale-x-0 origin-left transition-transform group-hover:scale-x-100"></span>
           </Link>
-
           <Button title="Login" />
         </div>
       </div>
