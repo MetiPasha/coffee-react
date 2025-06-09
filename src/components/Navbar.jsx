@@ -4,6 +4,7 @@ import { Link } from "react-scroll";
 import Button from "../layouts/Button";
 import { AiOutlineClose, AiOutlineMenuFold } from "react-icons/ai";
 import { Link as Links } from "react-router-dom";
+import { FaCartShopping } from "react-icons/fa6";
 
 const Navbar = () => {
   const [menu, setMenu] = useState(false);
@@ -24,7 +25,9 @@ const Navbar = () => {
             <span>
               <SiCoffeescript size={25} />
             </span>
-            <h1 className="text-xl font-semibold">CoffeePulse</h1>
+            <Links to="/">
+              <h1 className="text-xl font-semibold">CoffeePulse</h1>
+            </Links>
           </div>
           <nav className="hidden md:flex flex-row items-center text-lg font-medium gap-8">
             <Link
@@ -80,7 +83,7 @@ const Navbar = () => {
           </nav>
           <div className="hidden lg:flex items-center gap-6">
             <Links to="/cart" className="text-black hover:text-brand text-xl">
-              🛒 Cart
+              <FaCartShopping />
             </Links>
             <Button title="Login" />
           </div>

@@ -7,6 +7,12 @@ const Cart = () => {
   const removeFromCart = useStore((state) => state.removeFromCart);
   const increment = useStore((state) => state.increment);
   const decrement = useStore((state) => state.decrement);
+  const clearCart = useStore((state) => state.clearCart);
+  const totalPrice = cart.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0
+  );
+
   return (
     <div className="min-h-screen bg-brand ">
       <div className="p-4 rounded-lg shadow-md max-w-xl mx-auto pt-8 cart-brand">
@@ -18,7 +24,7 @@ const Cart = () => {
           <ul className="space-y-3">
             {cart.map((item) => (
               <li
-                key={item.key}
+                key={item.id}
                 className="flex justify-between items-center border-b pb-2"
               >
                 <div className="flex justify-between gap-2">
@@ -60,6 +66,17 @@ const Cart = () => {
               </li>
             ))}
           </ul>
+        )}
+        <p className="text-right font-bold mt-6 text-lg">
+          Total Price:${totalPrice.toFixed(2)}
+        </p>
+        {cart.length > 0 && (
+          <button
+            onClick={clearCart}
+            className="text-red-600 border border-red-600 px-4 py-2 rounded-md hover:bg-red-600 hover:text-white transition mt-4"
+          >
+            Clear Cart
+          </button>
         )}
       </div>
     </div>
