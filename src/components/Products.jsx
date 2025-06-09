@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ProductCard from "../layouts/ProductCard";
 import api from "../utils/axios";
-import useStore from "../store/store";
+import useStore from "../store/Store";
+import { Link } from "react-router-dom";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -31,6 +32,13 @@ const Products = () => {
             onAddToCart={() => addToCart(item)}
           />
         ))}
+      </div>
+      <div className="flex justify-center">
+        <Link to="/productList">
+          <button className="mt-20 border-6 border-amber-300 px-2 py-1 rounded-2xl hover:bg-amber-300 text-2xl font-bold cursor-pointer ">
+            See All Products
+          </button>
+        </Link>
       </div>
     </div>
   );

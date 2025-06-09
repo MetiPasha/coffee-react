@@ -7,6 +7,7 @@ import Products from "./components/Products";
 import Reviews from "./components/Reviews";
 import Footer from "./components/Footer";
 import Cart from "./components/Cart";
+import ProductList from "./components/ProductList";
 
 const App = () => {
   return (
@@ -38,6 +39,7 @@ const App = () => {
             </>
           }
         />
+        <Route path="/productList" element={<ProductList />} />
         <Route path="/cart" element={<Cart />} />
       </Routes>
     </Router>

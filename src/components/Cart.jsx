@@ -1,5 +1,5 @@
 import React from "react";
-import useStore from "../store/store";
+import useStore from "../store/Store";
 import { FaTrash } from "react-icons/fa";
 
 const Cart = () => {
