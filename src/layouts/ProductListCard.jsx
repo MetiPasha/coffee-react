@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { BsStar, BsStarFill } from "react-icons/bs";
 import { BiSolidStarHalf } from "react-icons/bi";
 
-const ProductListCard = ({ product, onAddToCart }) => {
+const ProductListCard = ({ name, product, onAddToCart }) => {
   const fullStar = Math.floor(product.rating);
   const halfStar = product.rating % 1 >= 0.5;
   const emptyStar = 5 - fullStar - (halfStar ? 1 : 0);
@@ -18,7 +18,7 @@ const ProductListCard = ({ product, onAddToCart }) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-lg">{product.title}</CardTitle>
+        <CardTitle className="text-lg">{name}</CardTitle>
       </CardHeader>
       <CardContent>
         <img
@@ -36,6 +36,9 @@ const ProductListCard = ({ product, onAddToCart }) => {
           ))}
         </div>
         <p className="mt-2 font-semibold">${product.price}</p>
+        <p className="text-gray-600 text-2xl font-bold">
+          {product.description}
+        </p>
       </CardContent>
       <CardFooter>
         <Button onClick={() => onAddToCart(product)}>Add to Cart</Button>

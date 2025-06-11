@@ -11,7 +11,12 @@ const Products = () => {
   useEffect(() => {
     api
       .get("/products")
-      .then((res) => setProducts(res.data))
+      .then((res) => {
+        const homeProducts = res.data.filter(
+          (p) => p.category === "productHome"
+        );
+        setProducts(homeProducts);
+      })
       .catch((err) => console.log(err));
   }, []);
 

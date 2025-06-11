@@ -14,15 +14,15 @@ const MenuCard = (props) => {
         </div>
         <div className="flex flex-row justify-between mt-3">
           <div className="flex gap-2">
-            <button className="px-3 text-sm border-2 border-text-brand bg-brand hover-brand transition-all rounded-lg ">
+            <button className="px-3 text-sm border-2 border-black bg-brand hover-brand transition-all rounded-lg ">
               Hot
             </button>
-            <button className="px-3 text-sm border-2 border-text-brand bg-brand hover-brand transition-all rounded-lg ">
+            <button className="px-3 text-sm border-2 border-black bg-brand hover-brand transition-all rounded-lg ">
               Cold
             </button>
           </div>
           <span className="flex items-center bg-brand px-3 py-2 rounded-full cursor-pointer">
-            <FaShoppingCart size={20} />
+            <FaShoppingCart className="hover:text-amber-700" size={20} />
           </span>
         </div>
       </div>
