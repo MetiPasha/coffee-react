@@ -18,18 +18,22 @@ const About = () => {
             What Makes Our Coffee Special?
           </h2>
           <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Commodi
-            quaerat quia quasi beatae et iste, tempora voluptatum corporis sit
-            pariatur eaque exercitationem, doloribus eum optio nobis cum?
-            Quidem, dolor atque.
+            What makes our coffee special is the passion behind every cup. From
+            carefully selected beans grown in sustainable farms to the expert
+            roasting process that brings out their unique flavors, we ensure
+            quality at every step. Our skilled baristas craft each cup with
           </p>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam ut
-            minima perspiciatis doloribus quod repellendus molestiae rerum!
-            Enim, vero natus.
+            precision and care, creating not just a drink, but an experience.
+            Rich aroma, balanced taste, and ethical sourcing — that's what sets
+            our coffee apart.
           </p>
-
-          <Button title="Learn More" />
+          <a
+            target="blink"
+            href="https://www.thirdwavecoffeeroasters.com/blogs/twc/specialty-coffee-what-makes-it-so-special"
+          >
+            <Button title="Learn More" />
+          </a>
         </div>
       </div>
     </div>

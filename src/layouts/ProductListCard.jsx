@@ -41,7 +41,9 @@ const ProductListCard = ({ name, product, onAddToCart }) => {
         </p>
       </CardContent>
       <CardFooter>
-        <Button onClick={() => onAddToCart(product)}>Add to Cart</Button>
+        <Button className="cursor-pointer" onClick={() => onAddToCart(product)}>
+          Add to Cart
+        </Button>
       </CardFooter>
     </Card>
   );

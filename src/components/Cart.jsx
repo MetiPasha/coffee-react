@@ -1,6 +1,7 @@
 import React from "react";
 import useStore from "../store/Store";
 import { FaTrash } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const cart = useStore((state) => state.cart);
@@ -12,10 +13,16 @@ const Cart = () => {
     (acc, item) => acc + item.price * item.quantity,
     0
   );
+  const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-brand ">
-      <div className="p-4 rounded-lg shadow-md max-w-xl mx-auto pt-8 cart-brand">
+    <div className="min-h-screen bg-brand relative overflow-hidden">
+      <img
+        className=" absolute z-0 top-0 left-0 w-full h-full object-cover opacity-50"
+        src="/Bcoffee.jpg"
+        alt="Background"
+      />
+      <div className="relative z-10- p-4 rounded-lg shadow-md max-w-xl mx-auto pt-8 cart-brand">
         <h2 className="text-2xl font-semibold mb-4">Shopping Cart</h2>
 
         {cart.length === 0 ? (
@@ -71,12 +78,20 @@ const Cart = () => {
           Total Price:${totalPrice.toFixed(2)}
         </p>
         {cart.length > 0 && (
-          <button
-            onClick={clearCart}
-            className="text-red-600 border border-red-600 px-4 py-2 rounded-md hover:bg-red-600 hover:text-white transition mt-4"
-          >
-            Clear Cart
-          </button>
+          <div className=" space-y-2">
+            <button
+              onClick={clearCart}
+              className="text-red-600 border border-red-600 px-4 py-2 rounded-md hover:bg-red-600 hover:text-white transition mt-4"
+            >
+              Clear Cart
+            </button>
+            <button
+              onClick={() => navigate("/checkout")}
+              className="w-full text-white bg-amber-950 px-4 py-2 rounded-md hover:bg-green-700 transition"
+            >
+              Pay
+            </button>
+          </div>
         )}
       </div>
     </div>
