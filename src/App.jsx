@@ -8,7 +8,7 @@ import Reviews from "./components/Reviews";
 import Footer from "./components/Footer";
 import Cart from "./components/Cart";
 import ProductList from "./components/ProductList";
-// import Checkout from "./components/Checkout";
+import Checkout from "./components/Checkout";
 
 const App = () => {
   return (
@@ -42,7 +42,7 @@ const App = () => {
         />
         <Route path="/productList" element={<ProductList />} />
         <Route path="/cart" element={<Cart />} />
-        {/* <Route path="/checkout" element={<Checkout />} /> */}
+        <Route path="/checkout" element={<Checkout />} />
       </Routes>
     </Router>
   );
