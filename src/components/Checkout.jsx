@@ -17,6 +17,14 @@ const Checkout = () => {
           <span>Subtotal:</span>
           <span>{totalPrice.toFixed(2)}$</span>
         </div>
+        <div className="flex justify-between">
+          <span>Discount:</span>
+          <span>{}$</span>
+        </div>
+        <div className="flex justify-between">
+          <span>Shipping:</span>
+          <span>15$</span>
+        </div>
       </div>
     </div>
   );
