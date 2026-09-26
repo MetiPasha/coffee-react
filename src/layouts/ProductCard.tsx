@@ -1,10 +1,16 @@
-import React from "react";
 import Button from "./Button";
-import { BsStar } from "react-icons/bs";
-import { BsStarFill } from "react-icons/bs";
+import { BsStar, BsStarFill } from "react-icons/bs";
 import { BiSolidStarHalf } from "react-icons/bi";
 
-const ProductCard = ({ title, image, price, rating, onAddToCart }) => {
+interface ProductCardProps {
+  title: string;
+  image: string;
+  price: number;
+  rating: number;
+  onAddToCart: () => void;
+}
+
+const ProductCard = ({ title, image, price, rating, onAddToCart }: ProductCardProps) => {
   const fullStar = Math.floor(rating);
   const halfStar = rating % 1 >= 0.5;
   const emptyStar = 5 - fullStar - (halfStar ? 1 : 0);

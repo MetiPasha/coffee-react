@@ -1,7 +1,32 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { persist, createJSONStorage } from "zustand/middleware";
 
-const useStore = create(
+export interface Product {
+  id: number | string;
+  name: string;
+  price: number;
+  image?: string;
+  [key: string]: unknown; // allows extra fields you might have (category, description, etc.)
+}
+
+export interface CartItem extends Product {
+  quantity: number;
+  discount: number;
+}
+
+interface StoreState {
+  cart: CartItem[];
+  discount: number;
+  setDiscount: (amount: number) => void;
+  addToCart: (product: Product) => void;
+  setProductDiscount: (id: number | string, discountAmount: number) => void;
+  increment: (id: number | string) => void;
+  decrement: (id: number | string) => void;
+  removeFromCart: (productId: number | string) => void;
+  clearCart: () => void;
+}
+
+const useStore = create<StoreState>()(
   persist(
     (set) => ({
       cart: [],
@@ -58,7 +83,7 @@ const useStore = create(
     }),
     {
       name: "cart-storage",
-      getStorage: () => localStorage,
+      storage: createJSONStorage(() => localStorage),
     }
   )
 );

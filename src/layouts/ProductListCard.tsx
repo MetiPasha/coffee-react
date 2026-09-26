@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Card,
   CardContent,
@@ -10,7 +9,21 @@ import { Button } from "@/components/ui/button";
 import { BsStar, BsStarFill } from "react-icons/bs";
 import { BiSolidStarHalf } from "react-icons/bi";
 
-const ProductListCard = ({ name, product, onAddToCart }) => {
+interface Product {
+  title: string;
+  image: string;
+  price: number;
+  rating: number;
+  description: string;
+}
+
+interface ProductListCardProps {
+  name: string;
+  product: Product;
+  onAddToCart: (product: Product) => void;
+}
+
+const ProductListCard = ({ name, product, onAddToCart }: ProductListCardProps) => {
   const fullStar = Math.floor(product.rating);
   const halfStar = product.rating % 1 >= 0.5;
   const emptyStar = 5 - fullStar - (halfStar ? 1 : 0);
