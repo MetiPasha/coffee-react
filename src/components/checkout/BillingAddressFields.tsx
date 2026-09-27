@@ -7,7 +7,7 @@ interface BillingAddressFieldsProps {
   sameAsShipping: boolean;
 }
 
-const BillingAddressFields = ({ register, sameAsShipping }: BillingAddressFieldsProps) => {
+const BillingAddressFields = ({ register, errors, sameAsShipping }: BillingAddressFieldsProps) => {
   return (
     <div className="space-y-2">
       <h3 className="font-semibold text-lg">Billing Address</h3>
@@ -19,30 +19,33 @@ const BillingAddressFields = ({ register, sameAsShipping }: BillingAddressFields
       {!sameAsShipping && (
         <div className="space-y-2 pt-2">
           <input
-            {...register("fullName")}
+            {...register("billingAddress.fullName")}
             placeholder="Billing Full Name"
             className="w-full border rounded-lg px-3 py-2"
           />
           <input
-            {...register("address")}
+            {...register("billingAddress.address")}
             placeholder="Billing Address"
             className="w-full border rounded-lg px-3 py-2"
           />
           <input
-            {...register("city")}
+            {...register("billingAddress.city")}
             placeholder="Billing City"
             className="w-full border rounded-lg px-3 py-2"
           />
           <input
-            {...register("postalCode")}
+            {...register("billingAddress.postalCode")}
             placeholder="Billing Postal Code"
             className="w-full border rounded-lg px-3 py-2"
           />
           <input
-            {...register("country")}
+            {...register("billingAddress.country")}
             placeholder="Billing Country"
             className="w-full border rounded-lg px-3 py-2"
           />
+          {errors.billingAddress?.fullName && (
+            <p className="text-red-600 text-sm">{errors.billingAddress.fullName.message}</p>
+          )}
         </div>
       )}
     </div>

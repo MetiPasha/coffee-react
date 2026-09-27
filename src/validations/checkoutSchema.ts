@@ -9,13 +9,18 @@ export const contactInfoSchema = z.object({
     .regex(/^09\d{9}$/, "شماره تلفن باید با 09 شروع شود و 11 رقم باشد"),
 });
 
-// آدرس ارسال
-export const shippingAddressSchema = z.object({
+// یک آدرس کامل (برای استفاده در ارسال و پرداخت)
+const addressFieldsSchema = z.object({
   fullName: z.string().min(2, "نام کامل الزامی است"),
   address: z.string().min(5, "آدرس باید حداقل ۵ کاراکتر باشد"),
   city: z.string().min(2, "شهر را وارد کنید"),
   postalCode: z.string().regex(/^\d{10}$/, "کد پستی باید 10 رقمی باشد"),
   country: z.string().min(2, "کشور را وارد کنید"),
+});
+
+// آدرس ارسال (تودرتو)
+export const shippingAddressSchema = z.object({
+  shippingAddress: addressFieldsSchema,
 });
 
 // روش ارسال
@@ -25,35 +30,29 @@ export const shippingMethodSchema = z.object({
   }),
 });
 
-// آدرس پرداخت (اگر متفاوت بود)
+// آدرس پرداخت (تودرتو، اختیاری اگر همون آدرس ارسال باشه)
 export const billingAddressSchema = z
   .object({
     sameAsShipping: z.boolean(),
-    fullName: z.string().min(2, "نام کامل الزامی است").optional(),
-    address: z.string().min(5, "آدرس باید حداقل ۵ کاراکتر باشد").optional(),
-    city: z.string().min(2, "شهر را وارد کنید").optional(),
-    postalCode: z
-      .string()
-      .regex(/^\d{10}$/, "کد پستی باید 10 رقمی باشد")
-      .optional(),
-    country: z.string().min(2, "کشور را وارد کنید").optional(),
+    billingAddress: addressFieldsSchema.partial().optional(),
   })
   .refine(
     (data) => {
       if (!data.sameAsShipping) {
         return (
-          data.fullName &&
-          data.address &&
-          data.city &&
-          data.postalCode &&
-          data.country
+          data.billingAddress &&
+          data.billingAddress.fullName &&
+          data.billingAddress.address &&
+          data.billingAddress.city &&
+          data.billingAddress.postalCode &&
+          data.billingAddress.country
         );
       }
       return true;
     },
     {
       message: "همه فیلدهای آدرس پرداخت را کامل پر کنید",
-      path: ["fullName"],
+      path: ["billingAddress", "fullName"],
     }
   );
 
@@ -67,7 +66,7 @@ export const paymentSchema = z.object({
   }),
 });
 
-// کد تخفیف (اختیاری، فقط اگر وارد شد اعتبارسنجی شود)
+// کد تخفیف (اختیاری)
 export const discountSchema = z.object({
   code: z.string().optional(),
 });
@@ -79,4 +78,5 @@ export const fullCheckoutSchema = contactInfoSchema
   .merge(billingAddressSchema)
   .merge(paymentSchema)
   .merge(discountSchema);
-  export type CheckoutFormData = z.infer<typeof fullCheckoutSchema>;
+
+export type CheckoutFormData = z.infer<typeof fullCheckoutSchema>;
