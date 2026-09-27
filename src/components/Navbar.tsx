@@ -52,6 +52,9 @@ const Navbar = () => {
             </Link>
           </nav>
           <div className="hidden lg:flex items-center gap-6">
+            <Links to="/orders" className="text-black hover:text-brand text-xl">
+              Orders
+            </Links>
             <Links to="/cart" className="text-black hover:text-brand text-xl">
               <FaCartShopping />
             </Links>
@@ -91,6 +94,7 @@ const Navbar = () => {
             Reviews
             <span className="absolute inset-x-0 bottom-0 h-0.5 bg-black transform scale-x-0 origin-left transition-transform group-hover:scale-x-100"></span>
           </Link>
+          
           <Button title="Login" />
         </div>
       </div>
