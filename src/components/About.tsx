@@ -1,4 +1,3 @@
-import React from "react";
 import img from "../assets/img/about.jpg";
 import Button from "../layouts/Button";
 
@@ -28,10 +27,7 @@ const About = () => {
             Rich aroma, balanced taste, and ethical sourcing — that's what sets
             our coffee apart.
           </p>
-          <a
-            target="blink"
-            href="https://www.thirdwavecoffeeroasters.com/blogs/twc/specialty-coffee-what-makes-it-so-special"
-          >
+          <a target="blink" href="https://www.thirdwavecoffeeroasters.com/blogs/twc/specialty-coffee-what-makes-it-so-special">
             <Button title="Learn More" />
           </a>
         </div>

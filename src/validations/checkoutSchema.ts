@@ -21,7 +21,7 @@ export const shippingAddressSchema = z.object({
 // روش ارسال
 export const shippingMethodSchema = z.object({
   method: z.enum(["standard", "express"], {
-    required_error: "روش ارسال الزامی است",
+    error: "روش ارسال الزامی است",
   }),
 });
 
@@ -60,10 +60,10 @@ export const billingAddressSchema = z
 // پرداخت
 export const paymentSchema = z.object({
   paymentMethod: z.enum(["card", "cod", "wallet", "gateway"], {
-    required_error: "روش پرداخت الزامی است",
+    error: "روش پرداخت الزامی است",
   }),
   termsAccepted: z.literal(true, {
-    errorMap: () => ({ message: "باید شرایط را بپذیرید" }),
+    error: "باید شرایط را بپذیرید",
   }),
 });
 
