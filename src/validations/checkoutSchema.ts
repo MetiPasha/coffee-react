@@ -79,3 +79,4 @@ export const fullCheckoutSchema = contactInfoSchema
   .merge(billingAddressSchema)
   .merge(paymentSchema)
   .merge(discountSchema);
+  export type CheckoutFormData = z.infer<typeof fullCheckoutSchema>;
