@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ProductCard from "../layouts/ProductCard";
 import api from "../utils/axios";
 import useStore from "../store/Store";
+import type { Product } from "../store/Store";
 import { Link } from "react-router-dom";
 
 const Products = () => {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const addToCart = useStore((state) => state.addToCart);
 
   useEffect(() => {
     api
-      .get("/products")
+      .get<Product[]>("/products")
       .then((res) => {
         const homeProducts = res.data.filter(
           (p) => p.category === "productHome"

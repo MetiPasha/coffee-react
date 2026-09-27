@@ -4,9 +4,11 @@ import { persist, createJSONStorage } from "zustand/middleware";
 export interface Product {
   id: number | string;
   name: string;
+  category: string;
+  image: string;
   price: number;
-  image?: string;
-  [key: string]: unknown; // allows extra fields you might have (category, description, etc.)
+  rating: number;
+  description: string;
 }
 
 export interface CartItem extends Product {

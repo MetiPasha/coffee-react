@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ProductListCard from "../layouts/ProductListCard";
 import useStore from "../store/Store";
+import type { Product } from "../store/Store";
 import api from "../utils/axios";
 
 const ProductList = () => {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const addToCart = useStore((state) => state.addToCart);
 
   useEffect(() => {
     api
-      .get("/products")
+      .get<Product[]>("/products")
       .then((res) => {
         const listProducts = res.data.filter(
           (p) => p.category === "productList"
         );
         setProducts(listProducts);
       })
-
       .catch((err) => console.log(err));
   }, []);
 

@@ -8,14 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { BsStar, BsStarFill } from "react-icons/bs";
 import { BiSolidStarHalf } from "react-icons/bi";
-
-interface Product {
-  title: string;
-  image: string;
-  price: number;
-  rating: number;
-  description: string;
-}
+import type { Product } from "../store/Store";
 
 interface ProductListCardProps {
   name: string;
@@ -36,7 +29,7 @@ const ProductListCard = ({ name, product, onAddToCart }: ProductListCardProps) =
       <CardContent>
         <img
           src={new URL(`../assets/img/${product.image}`, import.meta.url).href}
-          alt={product.title}
+          alt={product.name}
           className="w-full h-40 object-cover rounded-md"
         />
         <div className="flex items-center gap-1 mt-2">
