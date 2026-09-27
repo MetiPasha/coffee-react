@@ -8,7 +8,10 @@ const Checkout = () => {
     (acc, item) => acc + item.price * item.quantity,
     0
   );
-  const discount = subtotal * 0.1; // 10% تخفیف (دلخواه)
+  const discount = cart.reduce(
+    (acc, item) => acc + (item.discount || 0) * item.quantity,
+    0
+  );
   const shipping = 15;
   const total = subtotal - discount + shipping;
 
@@ -36,7 +39,7 @@ const Checkout = () => {
           </div>
 
           <div className="flex justify-between text-gray-600">
-            <span>Discount (10%)</span>
+            <span>Discount</span>
             <span className="font-medium text-green-600">
               -${discount.toFixed(2)}
             </span>
