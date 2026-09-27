@@ -1,13 +1,9 @@
-import React from "react";
 import useStore from "../store/Store";
 import { FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
-  // تابع برای اعمال تخفیف روی محصول
   const setProductDiscount = useStore((state) => state.setProductDiscount);
-
-  // دریافت اطلاعات سبد خرید از zustand
   const cart = useStore((state) => state.cart);
   const removeFromCart = useStore((state) => state.removeFromCart);
   const increment = useStore((state) => state.increment);
@@ -16,19 +12,15 @@ const Cart = () => {
 
   const navigate = useNavigate();
 
-  // محاسبه جمع کل با کسر تخفیف از هر محصول و اطمینان از اینکه قیمت منفی نشه
   const totalPrice = cart.reduce((acc, item) => {
-    // قیمت بعد از تخفیف به ازای هر محصول، اگر تخفیف بیشتر از قیمت بود قیمت صفر میشه
     const discountedPrice = Math.max(item.price - (item.discount || 0), 0);
     return acc + discountedPrice * item.quantity;
   }, 0);
 
-  // تابع کمکی برای اعمال تخفیف ثابت ۲ دلار به محصول
-  const applyDiscountToProduct = (id) => {
+  const applyDiscountToProduct = (id: number | string) => {
     const product = cart.find((item) => item.id === id);
     if (!product) return;
 
-    // حداقل بین ۲ دلار و قیمت محصول (تا تخفیف بیشتر از قیمت نشه)
     const discountAmount = Math.min(2, product.price);
 
     setProductDiscount(id, discountAmount);
@@ -49,7 +41,6 @@ const Cart = () => {
         ) : (
           <ul className="space-y-3">
             {cart.map((item) => {
-              // محاسبه قیمت محصول بعد از تخفیف و جلوگیری از منفی شدن قیمت
               const discountedPrice = Math.max(
                 item.price - (item.discount || 0),
                 0
@@ -64,7 +55,6 @@ const Cart = () => {
                   <div className="flex flex-col gap-1">
                     <p className="font-semibold">{item.name}</p>
 
-                    {/* کنترل تعداد محصول */}
                     <div className="flex gap-2 items-center">
                       {item.quantity > 1 ? (
                         <button
@@ -90,12 +80,10 @@ const Cart = () => {
                       </button>
                     </div>
 
-                    {/* نمایش مقدار تخفیف اعمال شده روی محصول */}
                     <p className="text-sm text-red-600">
                       Discount: ${item.discount?.toFixed(2) || "0.00"}
                     </p>
 
-                    {/* دکمه برای اعمال تخفیف ثابت ۲ دلار به محصول */}
                     <button
                       onClick={() => applyDiscountToProduct(item.id)}
                       className="text-xs bg-yellow-300 px-2 py-1 rounded hover:bg-yellow-400 transition"
@@ -105,16 +93,13 @@ const Cart = () => {
                   </div>
 
                   <div className="flex flex-col items-end gap-1">
-                    {/* قیمت اصلی محصول قبل از تخفیف، خط خورده */}
                     <p className="line-through text-gray-500">
                       ${(item.price * item.quantity).toFixed(2)}
                     </p>
-                    {/* قیمت محصول بعد از تخفیف به صورت برجسته */}
                     <p className="font-bold text-lg text-green-700">
                       ${totalItemPrice.toFixed(2)}
                     </p>
 
-                    {/* عکس محصول */}
                     <img
                       src={
                         new URL(`../assets/img/${item.image}`, import.meta.url)
@@ -130,12 +115,10 @@ const Cart = () => {
           </ul>
         )}
 
-        {/* نمایش جمع کل سفارش */}
         <p className="text-right font-bold mt-6 text-lg">
           Total Price: ${totalPrice.toFixed(2)}
         </p>
 
-        {/* دکمه‌های پاک کردن سبد و رفتن به صفحه پرداخت */}
         {cart.length > 0 && (
           <div className="space-y-2">
             <button
