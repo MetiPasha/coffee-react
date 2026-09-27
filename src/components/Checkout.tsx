@@ -10,6 +10,7 @@ import ShippingMethodFields from "./checkout/ShippingMethodFields";
 import BillingAddressFields from "./checkout/BillingAddressFields";
 import PaymentFields from "./checkout/PaymentFields";
 import OrderSummary from "./checkout/OrderSummary";
+import { saveOrder } from "../utils/orders";
 
 const Checkout = () => {
   const cart = useStore((state) => state.cart);
@@ -41,12 +42,21 @@ const Checkout = () => {
 
   const sameAsShipping = watch("sameAsShipping");
 
-  const onSubmit = async (data: CheckoutFormData) => {
-    console.log("Order submitted:", data);
-    await new Promise((resolve) => setTimeout(resolve, 600));
-    clearCart();
-    setOrderPlaced(true);
-  };
+ const onSubmit = async (data: CheckoutFormData) => {
+  await new Promise((resolve) => setTimeout(resolve, 600)); // simulate network delay
+
+  saveOrder({
+    items: cart,
+    subtotal,
+    discount,
+    shipping,
+    total,
+    customerInfo: data,
+  });
+
+  clearCart();
+  setOrderPlaced(true);
+};
 
   if (orderPlaced) {
     return (
