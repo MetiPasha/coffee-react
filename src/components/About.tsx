@@ -10,7 +10,7 @@ const About = () => {
 
       <div className=" flex flex-col lg:flex-row items-center gap-5">
         <div className=" w-full lg:w-2/4">
-          <img className=" rounded-lg" src={img} alt="img" />
+          <img className=" rounded-lg" src={img} alt="Barista pouring coffee" />
         </div>
         <div className=" w-full lg:w-2/4 p-4 space-y-3">
           <h2 className=" font-semibold text-3xl">
@@ -27,7 +27,11 @@ const About = () => {
             Rich aroma, balanced taste, and ethical sourcing — that's what sets
             our coffee apart.
           </p>
-          <a target="blink" href="https://www.thirdwavecoffeeroasters.com/blogs/twc/specialty-coffee-what-makes-it-so-special">
+          <a 
+  target="_blank"
+  rel="noopener noreferrer"
+  href="https://www.thirdwavecoffeeroasters.com/blogs/twc/specialty-coffee-what-makes-it-so-special">
+
             <Button title="Learn More" />
           </a>
         </div>

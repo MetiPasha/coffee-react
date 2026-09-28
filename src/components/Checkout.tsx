@@ -11,10 +11,12 @@ import BillingAddressFields from "./checkout/BillingAddressFields";
 import PaymentFields from "./checkout/PaymentFields";
 import OrderSummary from "./checkout/OrderSummary";
 import { saveOrder } from "../utils/orders";
+import { useAuth } from "../hooks/useAuth";
 
 const Checkout = () => {
   const cart = useStore((state) => state.cart);
   const clearCart = useStore((state) => state.clearCart);
+  const { user } = useAuth();
   const [orderPlaced, setOrderPlaced] = useState(false);
 
   const { subtotal, discount } = useMemo(
@@ -45,9 +47,11 @@ const total = subtotal - discount + shipping;
   const sameAsShipping = watch("sameAsShipping");
 
  const onSubmit = async (data: CheckoutFormData) => {
+  if (!user) return;
   await new Promise((resolve) => setTimeout(resolve, 600)); // simulate network delay
 
   saveOrder({
+    userEmail: user.email,
     items: cart,
     subtotal,
     discount,
@@ -62,7 +66,7 @@ const total = subtotal - discount + shipping;
 
   if (orderPlaced) {
     return (
-      <div className="w-screen min-h-screen flex justify-center items-center bg-brand px-4">
+      <div className="w-full min-h-screen flex justify-center items-center bg-brand px-4">
         <div className="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md text-center space-y-4">
           <h2 className="text-2xl font-bold">Order Placed! 🎉</h2>
           <p className="text-gray-600">
@@ -74,7 +78,7 @@ const total = subtotal - discount + shipping;
   }
 
   return (
-    <div className="w-screen min-h-screen flex justify-center items-center bg-brand px-4 py-10">
+    <div className="w-full min-h-screen flex justify-center items-center bg-brand px-4 py-10">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md space-y-6"

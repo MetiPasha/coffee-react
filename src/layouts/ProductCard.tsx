@@ -20,7 +20,7 @@ const ProductCard = ({ title, image, price, rating, onAddToCart }: ProductCardPr
       <img
         className=" rounded-lg"
         src={new URL(`../assets/img/${image}`, import.meta.url).href}
-        alt="img"
+        alt={title}
       />
       <div className=" flex flex-col items-center mt-5 gap-3">
         <h2 className=" font-semibold text-xl">{title}</h2>

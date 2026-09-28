@@ -20,7 +20,7 @@ const Home = () => {
       </div>
 
       <div className="relative">
-        <img src={img} alt="img" />
+        <img src={img} alt="Cup of cappuccino" />
 
         <div className=" absolute bg-white px-8 py-2 top-5 right-0 rounded-full shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)]">
           <h2 className=" font-semibold">14K</h2>

@@ -12,7 +12,7 @@ const ReviewCard = ({ img, title, review }: ReviewCardProps) => {
     <div className=" flex flex-col w-full lg:w-2/6 bg-white p-3 rounded-lg gap-5">
       <div className=" flex flex-row items-center lg:justify-start justify-center">
         <div className="w-1/4">
-          <img className=" rounded-full" src={img} alt="img" />
+          <img className=" rounded-full" src={img} alt={`Photo of ${title}`} />
         </div>
         <div className=" mx-3">
           <h2 className=" font-semibold text-lg">{title}</h2>

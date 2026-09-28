@@ -3,6 +3,7 @@ import type { CartItem } from "../store/Store";
 
 export interface Order {
   id: string;
+  userEmail: string;
   items: CartItem[];
   subtotal: number;
   discount: number;
@@ -17,22 +18,25 @@ const ORDERS_KEY = "coffee-react-orders";
 export function saveOrder(order: Omit<Order, "id" | "placedAt">): Order {
   const fullOrder: Order = {
     ...order,
+    userEmail: order.userEmail.toLowerCase(),
     id: crypto.randomUUID(),
     placedAt: new Date().toISOString(),
   };
 
-  const existing = getOrders();
-  const updated = [...existing, fullOrder];
+  const updated = [...getOrders(), fullOrder];
   localStorage.setItem(ORDERS_KEY, JSON.stringify(updated));
 
   return fullOrder;
 }
 
-export function getOrders(): Order[] {
+export function getOrders(userEmail?: string): Order[] {
   const raw = localStorage.getItem(ORDERS_KEY);
   if (!raw) return [];
   try {
-    return JSON.parse(raw) as Order[];
+    const all = JSON.parse(raw) as Order[];
+    if (!userEmail) return all;
+    const email = userEmail.toLowerCase();
+    return all.filter((order) => order.userEmail === email);
   } catch {
     return [];
   }
