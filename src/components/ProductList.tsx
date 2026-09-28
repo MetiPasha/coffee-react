@@ -1,27 +1,28 @@
-import { useEffect, useState } from "react";
 import ProductListCard from "../layouts/ProductListCard";
+import LoadingSpinner from "../layouts/LoadingSpinner";
+import ErrorMessage from "../layouts/ErrorMessage";
 import useStore from "../store/Store";
-import type { Product } from "../store/Store";
-import api from "../utils/axios";
+import { useProducts } from "../hooks/useProducts";
 
 const ProductList = () => {
-  const [products, setProducts] = useState<Product[]>([]);
   const addToCart = useStore((state) => state.addToCart);
-
-  useEffect(() => {
-    api
-      .get<Product[]>("/products")
-      .then((res) => {
-        const listProducts = res.data.filter(
-          (p) => p.category === "productList"
-        );
-        setProducts(listProducts);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  const {
+    data: products = [],
+    isLoading,
+    isError,
+    refetch,
+  } = useProducts("productList");
 
   return (
     <div className="min-h-screen flex flex-col justify-center lg:px-32 px-5 bg-brand">
+      {isLoading && <LoadingSpinner />}
+      {isError && (
+        <ErrorMessage
+          message="Couldn't load products."
+          onRetry={() => refetch()}
+        />
+      )}
+
       <div className=" pt-24 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6 ">
         {products.map((product) => (
           <ProductListCard
