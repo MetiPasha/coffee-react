@@ -1,31 +1,32 @@
-import { useEffect, useState } from "react";
 import ProductCard from "../layouts/ProductCard";
-import api from "../utils/axios";
+import LoadingSpinner from "../layouts/LoadingSpinner";
+import ErrorMessage from "../layouts/ErrorMessage";
 import useStore from "../store/Store";
-import type { Product } from "../store/Store";
+import { useProducts } from "../hooks/useProducts";
 import { Link } from "react-router-dom";
 
 const Products = () => {
-  const [products, setProducts] = useState<Product[]>([]);
   const addToCart = useStore((state) => state.addToCart);
-
-  useEffect(() => {
-    api
-      .get<Product[]>("/products")
-      .then((res) => {
-        const homeProducts = res.data.filter(
-          (p) => p.category === "productHome"
-        );
-        setProducts(homeProducts);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  const {
+    data: products = [],
+    isLoading,
+    isError,
+    refetch,
+  } = useProducts("productHome");
 
   return (
     <div className=" min-h-screen flex flex-col justify-center lg:px-32 px-5 bg-brand">
       <h1 className=" font-semibold text-center text-4xl lg:mt-14 mt-24 mb-8">
         Our Products
       </h1>
+
+      {isLoading && <LoadingSpinner />}
+      {isError && (
+        <ErrorMessage
+          message="Couldn't load products."
+          onRetry={() => refetch()}
+        />
+      )}
 
       <div className=" flex flex-col lg:flex-row gap-12 justify-center">
         {products.map((item) => (
