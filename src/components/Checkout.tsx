@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useMemo,useState } from "react";
 import useStore from "../store/Store";
 import { FaShoppingBag } from "react-icons/fa";
 import { fullCheckoutSchema, type CheckoutFormData } from "../validations/checkoutSchema";
@@ -17,16 +17,18 @@ const Checkout = () => {
   const clearCart = useStore((state) => state.clearCart);
   const [orderPlaced, setOrderPlaced] = useState(false);
 
-  const subtotal = cart.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
-  );
-  const discount = cart.reduce(
-    (acc, item) => acc + (item.discount || 0) * item.quantity,
-    0
-  );
-  const shipping = 15;
-  const total = subtotal - discount + shipping;
+  const { subtotal, discount } = useMemo(
+  () => ({
+    subtotal: cart.reduce((acc, item) => acc + item.price * item.quantity, 0),
+    discount: cart.reduce(
+      (acc, item) => acc + (item.discount || 0) * item.quantity,
+      0
+    ),
+  }),
+  [cart]
+);
+const shipping = 15;
+const total = subtotal - discount + shipping;
 
   const {
     register,
