@@ -12,6 +12,7 @@ import PaymentFields from "./checkout/PaymentFields";
 import OrderSummary from "./checkout/OrderSummary";
 import { saveOrder } from "../utils/orders";
 import { useAuth } from "../hooks/useAuth";
+import { getPromoRate } from "../utils/promo";
 
 const Checkout = () => {
   const cart = useStore((state) => state.cart);
@@ -19,7 +20,7 @@ const Checkout = () => {
   const { user } = useAuth();
   const [orderPlaced, setOrderPlaced] = useState(false);
 
-  const { subtotal, discount } = useMemo(
+ const { subtotal, discount } = useMemo(
   () => ({
     subtotal: cart.reduce((acc, item) => acc + item.price * item.quantity, 0),
     discount: cart.reduce(
@@ -30,21 +31,25 @@ const Checkout = () => {
   [cart]
 );
 const shipping = 15;
-const total = subtotal - discount + shipping;
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors, isSubmitting },
-  } = useForm<CheckoutFormData>({
-    resolver: zodResolver(fullCheckoutSchema),
-    defaultValues: {
-      sameAsShipping: true,
-    },
-  });
+const {
+  register,
+  handleSubmit,
+  watch,
+  formState: { errors, isSubmitting },
+} = useForm<CheckoutFormData>({
+  resolver: zodResolver(fullCheckoutSchema),
+  defaultValues: {
+    sameAsShipping: true,
+  },
+});
 
-  const sameAsShipping = watch("sameAsShipping");
+const sameAsShipping = watch("sameAsShipping");
+const promoCode = watch("code");
+const promoRate = getPromoRate(promoCode);
+const promoDiscount = (subtotal - discount) * promoRate;
+const totalDiscount = discount + promoDiscount;
+const total = subtotal - totalDiscount + shipping;
 
  const onSubmit = async (data: CheckoutFormData) => {
   if (!user) return;
@@ -54,7 +59,7 @@ const total = subtotal - discount + shipping;
     userEmail: user.email,
     items: cart,
     subtotal,
-    discount,
+    discount: totalDiscount,
     shipping,
     total,
     customerInfo: data,
@@ -70,7 +75,7 @@ const total = subtotal - discount + shipping;
         <div className="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md text-center space-y-4">
           <h2 className="text-2xl font-bold">Order Placed! 🎉</h2>
           <p className="text-gray-600">
-            Thanks for your order — a confirmation has been sent to your email.
+            Thanks for your order. You can view it any time in your order history.
           </p>
         </div>
       </div>
@@ -106,18 +111,26 @@ const total = subtotal - discount + shipping;
         <PaymentFields register={register} errors={errors} />
 
         <div className="space-y-2">
-          <input
-            {...register("code")}
-            placeholder="Promo code (optional)"
-            className="w-full border rounded-lg px-3 py-2"
-          />
-        </div>
+  <input
+    {...register("code")}
+    placeholder="Promo code (try COFFEE10)"
+    className="w-full border rounded-lg px-3 py-2"
+  />
+  {promoCode &&
+    (promoRate > 0 ? (
+      <p className="text-green-700 text-sm">
+        {Math.round(promoRate * 100)}% promo applied
+      </p>
+    ) : (
+      <p className="text-red-600 text-sm">Invalid promo code</p>
+    ))}
+</div>
 
         <div className="border-t border-dashed border-gray-300"></div>
 
         <OrderSummary
           subtotal={subtotal}
-          discount={discount}
+          discount={totalDiscount}
           shipping={shipping}
           total={total}
         />
