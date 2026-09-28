@@ -36,7 +36,8 @@ const Cart = () => {
       <img
         className=" absolute z-0 top-0 left-0 w-full h-full object-cover opacity-50"
         src="/Bcoffee.jpg"
-        alt="Background"
+        alt=""
+        aria-hidden="true"
       />
       <div className="relative p-4 rounded-lg shadow-md max-w-xl mx-auto pt-8 cart-brand">
         <h2 className="text-2xl font-semibold mb-4">Shopping Cart</h2>

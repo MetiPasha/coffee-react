@@ -10,7 +10,7 @@ const MenuCard = ({ img, title, value }: MenuCardProps) => {
   return (
     <div className="w-full lg:w-1/4 bg-white p-3 rounded-lg">
       <div>
-        <img className="rounded-xl" src={img} alt="img" />
+        <img className="rounded-xl" src={img} 	alt={title} />
       </div>
       <div className="p-2 mt-5">
         <div className="flex flex-row justify-between">

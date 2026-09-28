@@ -1,7 +1,9 @@
 import { getOrders } from "../utils/orders";
+import { useAuth } from "../hooks/useAuth";
 
 const OrderHistory = () => {
-  const orders = getOrders();
+  const { user } = useAuth();
+const orders = user ? getOrders(user.email) : [];
 
   if (orders.length === 0) {
     return (
