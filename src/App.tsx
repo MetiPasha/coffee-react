@@ -12,6 +12,7 @@ import About from "./components/About";
 import Products from "./components/Products";
 import Reviews from "./components/Reviews";
 import Footer from "./components/Footer";
+import ProtectedRoute from "./components/ProtectedRoute";
 import LoadingSpinner from "./layouts/LoadingSpinner";
 import ErrorBoundary from "./layouts/ErrorBoundary";
 
@@ -19,6 +20,7 @@ const ProductList = lazy(() => import("./components/ProductList"));
 const Cart = lazy(() => import("./components/Cart"));
 const Checkout = lazy(() => import("./components/Checkout"));
 const OrderHistory = lazy(() => import("./components/OrderHistory"));
+const Login = lazy(() => import("./components/Login"));
 
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center bg-brand">
@@ -60,8 +62,12 @@ const AppRoutes = () => {
           />
           <Route path="/productList" element={<ProductList />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/orders" element={<OrderHistory />} />
+          <Route path="/login" element={<Login />} />
+
+          <Route element={<ProtectedRoute />}>
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/orders" element={<OrderHistory />} />
+          </Route>
         </Routes>
       </Suspense>
     </ErrorBoundary>

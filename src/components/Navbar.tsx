@@ -3,8 +3,9 @@ import { SiCoffeescript } from "react-icons/si";
 import { Link } from "react-scroll";
 import Button from "../layouts/Button";
 import { AiOutlineClose, AiOutlineMenuFold } from "react-icons/ai";
-import { Link as Links } from "react-router-dom";
+import { Link as Links,useNavigate } from "react-router-dom";
 import { FaCartShopping } from "react-icons/fa6";
+import { useAuth } from "../hooks/useAuth";
 
 const Navbar = () => {
   const [menu, setMenu] = useState(false);
@@ -16,6 +17,19 @@ const Navbar = () => {
   const closeMenu = () => {
     setMenu(false);
   };
+
+  const { user, logout } = useAuth();
+   const navigate = useNavigate();
+
+  const handleAuthClick = () => {
+   closeMenu();
+   if (user) logout();
+   else navigate("/login");
+};
+
+const authButton = (
+  <Button title={user ? "Logout" : "Login"} onClick={handleAuthClick} />
+);
 
   return (
     <div className="fixed w-full z-10">
@@ -58,10 +72,10 @@ const Navbar = () => {
             <Links to="/cart" className="text-black hover:text-brand text-xl">
               <FaCartShopping />
             </Links>
-            <Button title="Login" />
+            {authButton}
           </div>
 
-          <div className="md:hidden flex items-center">
+          <div className="lg:hidden flex items-center">
             {menu ? (
               <AiOutlineClose size={25} onClick={handleChange} />
             ) : (
@@ -94,8 +108,14 @@ const Navbar = () => {
             Reviews
             <span className="absolute inset-x-0 bottom-0 h-0.5 bg-black transform scale-x-0 origin-left transition-transform group-hover:scale-x-100"></span>
           </Link>
+          <Links to="/cart" onClick={closeMenu} className="hover-brand">
+            Cart
+          </Links>
+          <Links to="/orders" onClick={closeMenu} className="hover-brand">
+            Orders
+          </Links>
           
-          <Button title="Login" />
+          {authButton}
         </div>
       </div>
     </div>
