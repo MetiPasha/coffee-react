@@ -7,20 +7,18 @@ export interface User {
 
 export interface AuthState {
   user: User | null;
-  token: string | null;
   status: "idle" | "loading" | "authenticated" | "error";
   error: string | null;
 }
 
 export type AuthAction =
   | { type: "LOGIN_START" }
-  | { type: "LOGIN_SUCCESS"; payload: { user: User; token: string } }
+  | { type: "LOGIN_SUCCESS"; payload: { user: User } }
   | { type: "LOGIN_FAILURE"; payload: string }
   | { type: "LOGOUT" };
 
 export const initialAuthState: AuthState = {
   user: null,
-  token: null,
   status: "idle",
   error: null,
 };
@@ -30,12 +28,7 @@ export function authReducer(state: AuthState, action: AuthAction): AuthState {
     case "LOGIN_START":
       return { ...state, status: "loading", error: null };
     case "LOGIN_SUCCESS":
-      return {
-        user: action.payload.user,
-        token: action.payload.token,
-        status: "authenticated",
-        error: null,
-      };
+      return { user: action.payload.user, status: "authenticated", error: null };
     case "LOGIN_FAILURE":
       return { ...initialAuthState, status: "error", error: action.payload };
     case "LOGOUT":

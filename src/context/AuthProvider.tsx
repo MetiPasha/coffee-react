@@ -5,71 +5,46 @@ import {
   useReducer,
   type ReactNode,
 } from "react";
-import {
-  AuthContext,
-  authReducer,
-  initialAuthState,
-  type AuthState,
-  type User,
-} from "./authContext";
+import { AuthContext, authReducer, initialAuthState } from "./authContext";
+import type { User } from "./authContext";
 
-const STORAGE_KEY = "coffee-react-auth";
-
-function loadInitialState(fallback: AuthState): AuthState {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return fallback;
-    const saved = JSON.parse(raw) as { user: User; token: string };
-    return {
-      user: saved.user,
-      token: saved.token,
-      status: "authenticated",
-      error: null,
-    };
-  } catch {
-    return fallback;
-  }
+async function loginRequest(email: string, password: string): Promise<User> {
+  const res = await fetch("/api/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({ email, password }),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "Login failed");
+  return data.user as User;
 }
 
-// Mock "server". Swap this function for a real API call later.
-async function fakeLoginRequest(email: string, password: string) {
-  await new Promise((resolve) => setTimeout(resolve, 700));
-  if (password !== "coffee123") {
-    throw new Error("Invalid email or password");
-  }
-  return {
-    user: { email, name: email.split("@")[0] },
-    token: `mock-token-${crypto.randomUUID()}`,
-  };
+async function meRequest(): Promise<User | null> {
+  const res = await fetch("/api/me", { credentials: "include" });
+  if (!res.ok) return null;
+  const data = await res.json();
+  return data.user as User | null;
+}
+
+async function logoutRequest(): Promise<void> {
+  await fetch("/api/logout", { method: "POST", credentials: "include" });
 }
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [state, dispatch] = useReducer(
-    authReducer,
-    initialAuthState,
-    loadInitialState
-  );
+  const [state, dispatch] = useReducer(authReducer, initialAuthState);
 
   useEffect(() => {
-    try {
-      if (state.user && state.token) {
-        localStorage.setItem(
-          STORAGE_KEY,
-          JSON.stringify({ user: state.user, token: state.token })
-        );
-      } else {
-        localStorage.removeItem(STORAGE_KEY);
-      }
-    } catch {
-      // storage unavailable, ignore
-    }
-  }, [state.user, state.token]);
+    meRequest().then((user) => {
+      if (user) dispatch({ type: "LOGIN_SUCCESS", payload: { user } });
+    });
+  }, []);
 
   const login = useCallback(async (email: string, password: string) => {
     dispatch({ type: "LOGIN_START" });
     try {
-      const result = await fakeLoginRequest(email, password);
-      dispatch({ type: "LOGIN_SUCCESS", payload: result });
+      const user = await loginRequest(email, password);
+      dispatch({ type: "LOGIN_SUCCESS", payload: { user } });
       return true;
     } catch (err) {
       dispatch({
@@ -80,7 +55,10 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
-  const logout = useCallback(() => dispatch({ type: "LOGOUT" }), []);
+  const logout = useCallback(() => {
+    logoutRequest();
+    dispatch({ type: "LOGOUT" });
+  }, []);
 
   const value = useMemo(
     () => ({ ...state, login, logout }),
